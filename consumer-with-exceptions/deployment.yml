@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-with-exceptions
+  labels:
+    app: consumer-with-exceptions
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consumer-with-exceptions
+  template:
+    metadata:
+      labels:
+        app: consumer-with-exceptions
+    spec:
+      containers:
+        - name: consumer-with-exceptions
+          image: diandersonmendonca/avro-kafka-consumer-with-exceptions:latest
+          ports:
+            - containerPort: 4000
+          resources:
+            limits:
+              cpu: 500m
+              memory: 60Mi
+            requests:
+              cpu: 500m
+              memory: 50Mi
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: docker
